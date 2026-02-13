@@ -2,12 +2,54 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Para Ti</title>
+    <title>Para Ti 😍</title>
     <style>
-        body { background-color: #000; color: #fff; font-family: serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; text-align: center; }
-        #btn-abrir { padding: 20px 40px; font-size: 20px; cursor: pointer; border-radius: 50px; border: none; font-weight: bold; z-index: 999; background: white; color: black; }
-        h1 { font-size: 50px; display: none; z-index: 888; position: relative; text-shadow: 2px 2px 10px #000; }
-        .emoji { position: absolute; font-size: 50px; z-index: 1; }
+        /* Fondo negro y texto centrado */
+        body { 
+            background-color: #000; 
+            color: #fff; 
+            font-family: 'Arial Black', sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            overflow: hidden; 
+            text-align: center; 
+        }
+
+        /* Botón de inicio */
+        #btn-abrir { 
+            padding: 25px 50px; 
+            font-size: 25px; 
+            cursor: pointer; 
+            border-radius: 60px; 
+            border: none; 
+            font-weight: bold; 
+            z-index: 999; 
+            background: white; 
+            color: black;
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+
+        /* TEXTO AGRANDADO */
+        h1 { 
+            font-size: 80px; /* Tamaño muy grande */
+            display: none; 
+            z-index: 888; 
+            position: relative; 
+            text-shadow: 4px 4px 15px rgba(255, 255, 255, 0.3);
+            line-height: 1.1;
+            width: 90%;
+        }
+
+        /* EMOJIS AGRANDADOS */
+        .emoji { 
+            position: absolute; 
+            font-size: 100px; /* Emojis gigantes */
+            z-index: 1; 
+            user-select: none;
+        }
     </style>
 </head>
 <body>
@@ -26,18 +68,24 @@
         const iconos = ['😍', '🍁', '🥊'];
 
         boton.onclick = function() {
-            // EL TRUCO: Forzar el audio antes de ocultar el botón
+            // Activa la música al tocar
             audio.play(); 
             
             boton.style.display = 'none';
             texto.style.display = 'block';
 
+            // Lluvia de emojis grandes
             setInterval(function() {
                 const e = document.createElement('div');
                 e.className = 'emoji';
                 e.innerHTML = iconos[Math.floor(Math.random() * iconos.length)];
-                e.style.left = Math.random() * 90 + 'vw';
-                e.style.top = Math.random() * 90 + 'vh';
+                e.style.left = Math.random() * 85 + 'vw';
+                e.style.top = Math.random() * 85 + 'vh';
+                
+                // Un pequeño giro aleatorio para que se vean mejor
+                const rotacion = Math.floor(Math.random() * 40) - 20;
+                e.style.transform = rotate(${rotacion}deg);
+                
                 document.body.appendChild(e);
             }, 300);
         };
