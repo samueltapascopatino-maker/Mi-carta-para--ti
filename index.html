@@ -6,34 +6,45 @@
     <title>Para Ti ♥️</title>
     <style>
         body { background-color: #00050a; color: white; font-family: 'Times New Roman', Times, serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; text-align: center; }
-        #btn-musica { padding: 20px 40px; font-size: 1.5rem; cursor: pointer; background: white; color: black; border: none; border-radius: 50px; z-index: 1000; font-weight: bold; }
-        h1 { font-size: 4.5rem; z-index: 500; display: none; margin: 0; line-height: 1.2; text-shadow: 0px 0px 30px rgba(0,0,0,1); pointer-events: none; }
+        #btn-musica { padding: 20px 40px; font-size: 1.5rem; cursor: pointer; background: white; color: black; border: none; border-radius: 50px; z-index: 1000; font-weight: bold; box-shadow: 0 0 20px rgba(255,255,255,0.4); }
+        h1 { font-size: 4.5rem; z-index: 500; display: none; margin: 0; line-height: 1.2; text-shadow: 0px 0px 30px rgba(0,0,0,1), 0px 0px 10px rgba(0,0,0,1); pointer-events: none; }
         .emoji { position: absolute; font-size: 4.5rem; user-select: none; z-index: 1; opacity: 0; transition: opacity 0.8s ease-in-out; }
     </style>
 </head>
 <body>
-    <button id="btn-musica">CLICK AQUÍ PARA ABRIR ✉️</button>
-    <h1 id="texto">TE QUIERO DEMACIADO <br> Muaa</h1>
-    <audio id="cancion" preload="auto">
-        <source src="https://media1.vocaroo.com/mp3/15RWa1B7dFrs" type="audio/mpeg">
+
+    <button id="btn-musica">CLICK AQUÍ PARA TI ✉️</button>
+    <h1 id="texto">TE QUIERO DEMACIADO <br> MUAA</h1>
+
+    <audio id="cancion" crossorigin="anonymous">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     </audio>
+
     <script>
         const btn = document.getElementById('btn-musica');
         const audio = document.getElementById('cancion');
         const texto = document.getElementById('texto');
         const emojis = ['😍', '🍁', '🥊'];
+
         btn.addEventListener('click', () => {
             btn.style.display = 'none';
             texto.style.display = 'block';
-            audio.currentTime = 60;
-            audio.play().catch(e => console.log("Error de audio"));
+            
+            // Intentar reproducir la música
+            audio.play().then(() => {
+                console.log("Reproduciendo...");
+            }).catch(error => {
+                console.log("El navegador bloqueó el audio inicial, pero el botón debería activarlo.");
+            });
+
+            // Lluvia de emojis permanentes
             setInterval(() => {
                 const e = document.createElement('div');
                 e.className = 'emoji';
                 e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
                 e.style.left = Math.random() * 90 + 'vw';
                 e.style.top = Math.random() * 90 + 'vh';
-                e.style.transform = `rotate(${Math.floor(Math.random() * 40) - 20}deg)`;
+                e.style.transform = rotate(${Math.floor(Math.random() * 40) - 20}deg);
                 document.body.appendChild(e);
                 setTimeout(() => { e.style.opacity = '1'; }, 50);
             }, 250);
