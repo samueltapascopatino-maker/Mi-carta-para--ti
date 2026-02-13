@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ti ♥️</title>
+    <style>
+        body {
+            background-color: #00050a;
+            color: white;
+            font-family: 'Times New Roman', Times, serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #btn-musica {
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: white;
+            color: black;
+            border: none;
+            border-radius: 50px;
+            z-index: 1000;
+            font-weight: bold;
+            box-shadow: 0 0 30px rgba(255,255,255,0.3);
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            z-index: 500;
+            display: none;
+            margin: 0;
+            line-height: 1.2;
+            text-shadow: 0px 0px 30px rgba(0,0,0,1), 0px 0px 10px rgba(0,0,0,1); 
+            pointer-events: none;
+        }
+
+        .emoji {
+            position: absolute;
+            font-size: 4.5rem;
+            user-select: none;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="btn-musica">CLICK AQUÍ PARA ABRIR ✉️</button>
+    <h1 id="texto">TE QUIERO DEMACIADO <br> Muaa</h1>
+
+    <audio id="cancion" preload="auto">
+        <source src="https://media1.vocaroo.com/mp3/15RWa1B7dFrs" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const btn = document.getElementById('btn-musica');
+        const audio = document.getElementById('cancion');
+        const texto = document.getElementById('texto');
+        const emojis = ['♥️', '🍁', '🥊'];
+
+        btn.addEventListener('click', () => {
+            // 1. Ocultar botón y mostrar texto inmediatamente
+            btn.style.display = 'none';
+            texto.style.display = 'block';
+            
+            // 2. Intentar reproducir música
+            audio.currentTime = 60; // Empezar al minuto 1
+            const playPromise = audio.play();
+
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("La reproducción automática fue prevenida o el archivo no cargó.");
+                });
+            }
+
+            // 3. Control de tiempo para detener al 1:40
+            audio.addEventListener('timeupdate', function() {
+                if (this.currentTime >= 100) {
+                    this.pause();
+                }
+            });
+
+            // 4. Iniciar lluvia de emojis permanentes
+            setInterval(createEmoji, 250);
+        });
+
+        function createEmoji() {
+            const e = document.createElement('div');
+            e.className = 'emoji';
+            e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            e.style.left = Math.random() * 90 + 'vw';
+            e.style.top = Math.random() * 90 + 'vh';
+            
+            const randomRotation = Math.floor(Math.random() * 40) - 20;
+            e.style.transform = rotate(${randomRotation}deg);
+
+            document.body.appendChild(e);
+
+            setTimeout(() => { e.style.opacity = '1'; }, 50);
+        }
+    </script>
+</body>
+</html>
