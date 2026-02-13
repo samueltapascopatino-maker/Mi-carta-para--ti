@@ -2,56 +2,46 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Ti ♥️</title>
+    <title>Para Ti</title>
     <style>
-        body { background-color: #00050a; color: white; font-family: 'Times New Roman', Times, serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; text-align: center; }
-        #btn-musica { padding: 20px 40px; font-size: 1.5rem; cursor: pointer; background: white; color: black; border: none; border-radius: 50px; z-index: 1000; font-weight: bold; }
-        h1 { font-size: 4.5rem; z-index: 500; display: none; margin: 0; line-height: 1.2; text-shadow: 0px 0px 30px rgba(0,0,0,1); pointer-events: none; }
-        .emoji { position: absolute; font-size: 4.5rem; user-select: none; z-index: 1; opacity: 0; transition: opacity 0.8s ease-in-out; }
+        body { background-color: #000; color: #fff; font-family: serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; text-align: center; }
+        #btn-abrir { padding: 20px 40px; font-size: 20px; cursor: pointer; border-radius: 50px; border: none; font-weight: bold; z-index: 999; background-color: white; color: black; }
+        h1 { font-size: 50px; display: none; z-index: 888; position: relative; text-shadow: 2px 2px 10px #000; line-height: 1.2; }
+        .emoji { position: absolute; font-size: 50px; z-index: 1; }
     </style>
 </head>
 <body>
 
-    <button id="btn-musica">CLICK AQUÍ PARA ABRIR ✉️</button>
-    <h1 id="texto">TE QUIERO DEMACIADO <br> MUAA</h1>
+    <button id="btn-abrir">CLICK AQUÍ PARA ABRIR ✉️</button>
+    <h1 id="mensaje">TE QUIERO DEMACIADO <br> MUAA</h1>
 
-    <audio id="cancion" loop>
+    <audio id="musica" loop>
         <source src="https://www.chosic.com/wp-content/uploads/2021/07/The-Garden-Of-Wishing-Wells.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-        const btn = document.getElementById('btn-musica');
-        const audio = document.getElementById('cancion');
-        const texto = document.getElementById('texto');
-        const emojis = ['😍', '🍁', '🥊'];
+        const boton = document.getElementById('btn-abrir');
+        const texto = document.getElementById('mensaje');
+        const audio = document.getElementById('musica');
+        const iconos = ['😍', '🍁', '🥊']; // Corazón cambiado por 😍
 
-        btn.addEventListener('click', () => {
-            // 1. Mostrar texto y ocultar botón
-            btn.style.display = 'none';
+        boton.onclick = function() {
+            boton.style.display = 'none';
             texto.style.display = 'block';
             
-            // 2. FORZAR AUDIO (Truco para navegadores modernos)
-            audio.play().then(() => {
-                console.log("Música iniciada correctamente");
-            }).catch(error => {
-                console.log("Error al reproducir: ", error);
-                // Intento secundario si falla
-                document.body.addEventListener('click', () => { audio.play(); }, {once: true});
-            });
+            // Intento de música
+            audio.play().catch(function(e) { console.log("Error audio"); });
 
-            // 3. Iniciar lluvia de emojis státicos
-            setInterval(() => {
+            // Lluvia de emojis
+            setInterval(function() {
                 const e = document.createElement('div');
                 e.className = 'emoji';
-                e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                e.innerHTML = iconos[Math.floor(Math.random() * iconos.length)];
                 e.style.left = Math.random() * 90 + 'vw';
                 e.style.top = Math.random() * 90 + 'vh';
-                e.style.transform = rotate(${Math.floor(Math.random() * 40) - 20}deg);
                 document.body.appendChild(e);
-                setTimeout(() => { e.style.opacity = '1'; }, 50);
-            }, 200);
-        });
+            }, 300);
+        };
     </script>
 </body>
 </html>
